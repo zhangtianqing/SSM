@@ -12,6 +12,16 @@
   <sql id="Base_Column_List">
     u_uuid, username, password, is_delete, create_date, c_uuid
   </sql>
+  
+  
+  <select id="userExist" parameterType="com.rzx.ssm.entity.User" resultMap="BaseResultMap">
+  select 
+    <include refid="Base_Column_List" />
+    from user
+    where password = #{password,jdbcType=VARCHAR}
+      and username = #{username,jdbcType=VARCHAR}
+      and is_delete = 1
+  </select>
   <select id="selectByPrimaryKey" parameterType="com.rzx.ssm.entity.UserKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -36,6 +46,11 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.rzx.ssm.entity.User">
+  
+  <selectKey keyProperty="pkGlobalId" resultType="String" order="BEFORE">  
+        select  replace(uuid(),'-','')   from dual  
+    </selectKey>  
+    
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uUuid != null">

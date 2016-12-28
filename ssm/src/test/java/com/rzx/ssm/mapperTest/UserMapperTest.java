@@ -24,4 +24,21 @@ public class UserMapperTest extends BasicTest {
 		user.setcUuid(classsKey.getcUuid());
 		System.out.println(userMapper.insert(user));
 	}
+	
+	
+	@Test
+	public void testUserExist(){
+		User user=new User();
+//		user.setUsername("adminstrator");
+		user.setUsername("adminstrators");
+		user.setPassword("soft");
+		User user2=userMapper.userExist(user);
+		if (user2!=null) {
+			System.out.println("exiist");
+		}else {
+			System.out.println("not exist");
+		}
+	}
+	
+	
 }
