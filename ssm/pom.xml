@@ -147,6 +147,14 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- web socket 连接   -->
+		<dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.0-rc5</version>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
 	<build>
 		<finalName>ssm</finalName>

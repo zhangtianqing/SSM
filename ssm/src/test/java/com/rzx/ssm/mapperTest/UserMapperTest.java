@@ -40,5 +40,20 @@ public class UserMapperTest extends BasicTest {
 		}
 	}
 	
+	@Test
+	public void testUserByUsernameExist(){
+		User user2=userMapper.userExistByUsername("adminstrator");
+		if (user2!=null) {
+			System.out.println("exiist");
+		}else {
+			System.out.println("not exist");
+		}
+	}
 	
+	@Test
+	public void testDeleteUserByU_uuid(){
+		if (1==userMapper.deleteUserByUuid("24838094943420424")) {
+			System.out.println("OK");
+		}
+	}
 }

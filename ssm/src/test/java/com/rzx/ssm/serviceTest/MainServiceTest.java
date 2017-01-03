@@ -19,4 +19,9 @@ public class MainServiceTest extends BasicTest {
 		user.setPassword("soft");
 		System.out.println(mainService.checkUserExist(user));
 	}
+	
+	@Test
+	public void checkUserExistByUsernameTest(){
+		System.out.println(mainService.checkUserExistByUsername("adminstrator"));
+	}
 }

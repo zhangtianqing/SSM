@@ -14,6 +14,24 @@
   </sql>
   
   
+  <delete id="deleteUserByUuid" parameterType="String" >
+  update user set is_delete=0 where u_uuid=#{uUid,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="selectByU_Uuid" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where u_uudi=#{u_uuid,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="userExistByUsername" parameterType="String" resultMap="BaseResultMap">
+  select 
+    <include refid="Base_Column_List" />
+    from user
+    where username=#{username,jdbcType=VARCHAR}
+  </select>
+  
   <select id="userExist" parameterType="com.rzx.ssm.entity.User" resultMap="BaseResultMap">
   select 
     <include refid="Base_Column_List" />

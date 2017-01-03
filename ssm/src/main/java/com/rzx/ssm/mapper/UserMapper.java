@@ -12,9 +12,15 @@ public interface UserMapper {
 
     User selectByPrimaryKey(UserKey key);
 
+    User selectByU_Uuid(String u_uuid);
+    
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
     
     User userExist(User user);
+    
+    User userExistByUsername(String username);
+    
+    int deleteUserByUuid(String uUuid);
 }

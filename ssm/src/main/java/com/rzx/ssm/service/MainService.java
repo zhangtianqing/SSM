@@ -16,4 +16,14 @@ public class MainService {
 		return userMapper.userExist(user)==null?false:true;
 	}
 	
+	public boolean checkUserExistByUsername(String username){
+		return userMapper.userExistByUsername(username)==null?false:true;
+	}
+	
+	public boolean getUserByU_Uid(String u_uuid){
+		return userMapper.selectByU_Uuid(u_uuid)==null?false:true;
+	}
+//	public boolean deleteUserByUuid(String uuid){
+//		return 
+//	}
 }
