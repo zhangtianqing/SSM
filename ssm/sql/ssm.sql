@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-01-03 17:02:53
+Date: 2017-01-09 14:37:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -57,12 +57,13 @@ CREATE TABLE `test_table` (
   `test3` varchar(255) DEFAULT NULL,
   `test4` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of test_table
 -- ----------------------------
-INSERT INTO `test_table` VALUES ('1', '123', 'asd', 'abc', 'xyz');
+INSERT INTO `test_table` VALUES ('1', '123', 'false', 'abc', 'xyz');
+INSERT INTO `test_table` VALUES ('2', '24838094943420424', null, null, null);
 
 -- ----------------------------
 -- Table structure for user
