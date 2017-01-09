@@ -22,7 +22,7 @@
     select 
     <include refid="Base_Column_List" />
     from user
-    where u_uudi=#{u_uuid,jdbcType=VARCHAR}
+    where u_uuid=#{u_uuid,jdbcType=VARCHAR}
   </select>
   
   <select id="userExistByUsername" parameterType="String" resultMap="BaseResultMap">

@@ -14,7 +14,7 @@
     
     <!-- 配置整合mybatis过程 -->
     <!-- 1.配置数据库相关参数properties的属性：${url} -->
-    <context:property-placeholder location="classpath:jdbc.properties" />
+    <context:property-placeholder location="classpath:jdbc.properties,classpath:redis.properties" />
 
     <!-- 2.数据库连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -73,4 +73,53 @@
     <!-- 配置基于注解的声明式事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" />
      <!-- Services层 End -->
+     
+     
+     
+     <!-- Redis start -->
+     <!-- jedis 配置 -->  
+   <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig" >  
+         <property name="maxIdle" value="${redis.maxIdle}" />  
+         <property name="maxWaitMillis" value="${redis.maxWait}" />  
+         <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
+   </bean >  
+  <!-- redis服务器中心 -->  
+   <bean id="connectionFactory"  class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" >  
+         <property name="poolConfig" ref="poolConfig" />  
+         <property name="port" value="${redis.port}" />  
+         <property name="hostName" value="${redis.host}" />  
+         <property name="password" value="${redis.password}" />  
+         <property name="timeout" value="${redis.timeout}" ></property>  
+   </bean >  
+   <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" >  
+         <property name="connectionFactory" ref="connectionFactory" />  
+         <property name="keySerializer" >  
+             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />  
+         </property>  
+         <property name="valueSerializer" >  
+             <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />  
+         </property>  
+   </bean >  
+     
+    <!-- cache配置 -->  
+   <bean id="methodCacheInterceptor" class="com.rzx.ssm.util.redis.MethodCacheInterceptor" >  
+         <property name="redisUtil" ref="redisUtil" />  
+   </bean >  
+   <bean id="redisUtil" class="com.rzx.ssm.util.redis.RedisUtil" >  
+         <property name="redisTemplate" ref="redisTemplate" />  
+   </bean >  
+   <!-- 需要加入缓存的类或方法 -->  
+<bean id="methodCachePointCut"  class="org.springframework.aop.support.RegexpMethodPointcutAdvisor" >  
+      <property name="advice" ref="methodCacheInterceptor"/>
+      <property name="patterns" >  
+          <list>  
+           <!-- 确定正则表达式列表 -->  
+             <value>com\.rzx\.ssm\.service\...*Service.*</value >  
+          </list>  
+      </property>  
+</bean >  
+   
+   <!-- Redis end -->
+   
+   
 </beans>

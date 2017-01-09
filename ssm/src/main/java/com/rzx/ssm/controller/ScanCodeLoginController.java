@@ -20,23 +20,18 @@ public class ScanCodeLoginController {
 	MainService mainService;
 	
 	/**
-	 * ɨ���ʹ��
+	 * 扫码端请求资源
 	 * @param userid
 	 * @param codeid
 	 * @return
 	 */
 	@RequestMapping(value="/login/{userid}/{codeid}")
 	public boolean scanLoginAsModelPhone(@PathVariable String userid,@PathVariable String codeid,HttpSession session){
-		if (mainService.getUserByU_Uid(codeid)) {
-			  session.setAttribute("result", "true"); ;
-			return true;
-		}
-		
-		return false;
+		return mainService.updateLoginState(codeid, codeid);
 	}
 	
 	/**
-	 * Browser ʹ��
+	 * Browser 
 	 * @param codeid
 	 * @param session
 	 * @return
@@ -44,10 +39,21 @@ public class ScanCodeLoginController {
 	@RequestMapping(value="/login/{codeid}")
 	@ResponseBody
 	public boolean scanLogin(@PathVariable String codeid,HttpSession session){
-		System.out.println(codeid+"\t ��ȡ��½��Ϣ����");
-//		if (session.getAttribute("result")==null||!session.getAttribute("result").toString().equals(codeid)) {
-//			return false;
-//		}
-		return true;
+		System.out.println(codeid+"\t请求资源");
+		//检测数据库是否有对应的数据，
+		switch (mainService.codeLogin(codeid)) {
+		case -1:
+			System.out.println("database data insert failed");
+			return mainService.codeLogin(codeid)==-1?false:true;
+		case 0:
+		case 1:
+			System.out.println("database hadn't data record with code "+codeid);
+			return false;
+		case 2:
+			System.out.println("found data！ allow login");
+			return true;
+		}
+		//默认失败
+		return false;
 	}
 }

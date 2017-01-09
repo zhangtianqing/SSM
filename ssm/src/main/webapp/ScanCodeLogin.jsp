@@ -51,7 +51,8 @@ function GetRandomNum(Min,Max)
  */
 function ajaxGetLoginResult(){
 // 	alert('迭代器id = '+each);
-	$.get("./scan/login/"+randomValue,function(data,status){
+	$.get("./scan/login/"+randomValue,
+	 	function(data,status){
 		if(data==true ){
 			alert(randomValue);
             alert("登录成功");

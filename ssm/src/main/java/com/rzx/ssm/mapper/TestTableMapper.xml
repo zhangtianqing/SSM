@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rzx.ssm.mapper.testTableMapper">
-  <resultMap id="BaseResultMap" type="com.rzx.ssm.entity.testTable">
+<mapper namespace="com.rzx.ssm.mapper.TestTableMapper">
+  <resultMap id="BaseResultMap" type="com.rzx.ssm.mapper.TestTableMapper">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="test1" jdbcType="VARCHAR" property="test1" />
     <result column="test2" jdbcType="VARCHAR" property="test2" />
@@ -12,9 +12,18 @@
     id, test1, test2, test3, test4
   </sql>
   
-  <insert id="insertOnlyTest1" parameterType="String">
-  	insert into test_table(test1=#{test1,jdbcType=VARCHAR})
+  
+  <insert id="insertOnlyTest1" parameterType="java.lang.String">
+  	insert into test_table(test1) values(#{test1,jdbcType=VARCHAR})
   </insert>
+  
+  <select id="selectByVarcharTest1" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from test_table
+    where test1 = #{test1,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -25,13 +34,13 @@
     delete from test_table
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rzx.ssm.entity.testTable">
+  <insert id="insert" parameterType="com.rzx.ssm.mapper.TestTableMapper">
     insert into test_table (test1, test2, 
       test3, test4)
     values (#{test1,jdbcType=VARCHAR}, #{test2,jdbcType=VARCHAR}, 
       #{test3,jdbcType=VARCHAR}, #{test4,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.rzx.ssm.entity.testTable">
+  <insert id="insertSelective" parameterType="com.rzx.ssm.mapper.TestTableMapper">
     insert into test_table
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -68,7 +77,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rzx.ssm.entity.testTable">
+  <update id="updateByPrimaryKeySelective" parameterType="com.rzx.ssm.mapper.TestTableMapper">
     update test_table
     <set>
       <if test="test1 != null">
@@ -86,7 +95,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rzx.ssm.entity.testTable">
+  <update id="updateByPrimaryKey" parameterType="com.rzx.ssm.mapper.TestTableMapper">
     update test_table
     set test1 = #{test1,jdbcType=VARCHAR},
       test2 = #{test2,jdbcType=VARCHAR},
@@ -94,4 +103,23 @@
       test4 = #{test4,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateByTest1" parameterType="com.rzx.ssm.mapper.TestTableMapper">
+    update test_table
+    <set>
+      <if test="test1 != null">
+        test1 = #{test1,jdbcType=VARCHAR},
+      </if>
+      <if test="test2 != null">
+        test2 = #{test2,jdbcType=VARCHAR},
+      </if>
+      <if test="test3 != null">
+        test3 = #{test3,jdbcType=VARCHAR},
+      </if>
+      <if test="test4 != null">
+        test4 = #{test4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where test1=#{test1,jdbcType=VARCHAR}
+    </update>
+  
 </mapper>
